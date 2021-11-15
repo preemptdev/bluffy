@@ -1,7 +1,7 @@
 from core.ArgumentHandler import Args
 from core import helpers
 from core.mask.MaskFactory import get_mask_factory, MaskFactory
-from core import logger
+from core import logger, banner
 
 
 def mask_bin(input_file: str, output_file: str, mask_required: str) -> None:
@@ -42,6 +42,8 @@ def mask_bin(input_file: str, output_file: str, mask_required: str) -> None:
 
 def main() -> None:
     """Get args and execute"""
+
+    banner.show()
 
     # get args
     args = Args.get_args()

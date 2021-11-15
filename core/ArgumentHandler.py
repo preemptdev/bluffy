@@ -11,7 +11,7 @@ class Args:
         # the base argument parser
         parser = argparse.ArgumentParser(
             prog="Bluffy",
-            description=banner.brrr(),
+            description="",
             formatter_class=argparse.RawDescriptionHelpFormatter,
             add_help=True,
         )
@@ -25,7 +25,7 @@ class Args:
         parser.add_argument(
             "-o",
             "--output",
-            help="Specify file to output too",
+            help="Specify file to output to",
             metavar="",
             required=True,
         ),
