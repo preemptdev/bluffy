@@ -9,7 +9,7 @@
     </p>
 </p>
 
-<h5 align="center"><i>An Experimental Command &amp; Control Server!</i></h5>
+<h5 align="center"><i>Convert shellcode into ✨ different ✨ formats!</i></h5>
 
 Bluffy is a utility which was used in experiments to bypass Anti-Virus products (statically) by formatting shellcode into realistic looking data formats.
 
@@ -57,6 +57,6 @@ optional arguments:
   -m , --mask     Specify the mask for the shellcode
 ```
 
-Written by
+Written by:
 - [Michael Ranaldo](https://twitter.com/michaeljranaldo)
 - [Mez0](https://twitter.com/__mez0__)
