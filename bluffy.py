@@ -1,11 +1,15 @@
 from core.ArgumentHandler import Args
 from core import helpers
-from core.mask.MaskFactory import get_mask_factory, MaskFactory
+from core.mask.MaskFactory import get_mask_factory, get_factories, MaskFactory
 from core import logger, banner
 
 
 def mask_bin(input_file: str, mask_required: str) -> None:
     """Given an input, output, and mask type: read the bytes, identify the factory, mask the bytes, write them to disk."""
+
+    if input_file == None or mask_required == None:
+        logger.bad("Please specify -b AND -m (bin file and mask)")
+        quit()
 
     # get the bytes of the input bin
     blob: bytes = helpers.get_bytes_from_file(input_file)
@@ -38,6 +42,12 @@ def mask_bin(input_file: str, mask_required: str) -> None:
     return
 
 
+def show_masks() -> None:
+    """Call the get_factories() function to get the available options and pretty print them in logger.py"""
+    logger.masks(get_factories())
+    return
+
+
 def main() -> None:
     """Get args and execute"""
 
@@ -46,8 +56,16 @@ def main() -> None:
     # get args
     args = Args.get_args()
 
-    # do the thing!
-    mask_bin(input_file=args.bin, mask_required=args.mask)
+    # if listing, show and quit
+    if args.list:
+        show_masks()
+        quit()
+
+    # otherwise do the thing!
+    else:
+        mask_bin(input_file=args.bin, mask_required=args.mask)
+
+    return
 
 
 if __name__ == "__main__":

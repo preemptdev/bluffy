@@ -17,9 +17,7 @@ class Args:
         )
 
         # Bin to read
-        parser.add_argument(
-            "-b", "--bin", help="Specify bin file to load", metavar="", required=True
-        ),
+        parser.add_argument("-b", "--bin", help="Specify bin file to load", metavar=""),
 
         # Always required, but the choices[] param is needed too
         parser.add_argument(
@@ -28,7 +26,11 @@ class Args:
             help="Specify the mask for the shellcode",
             choices=["svg", "css", "uuid", "clsid"],
             metavar="",
-            required=True,
+        )
+
+        # Simple, list the available masks
+        parser.add_argument(
+            "--list", help="List all the available masks", action="store_true"
         )
 
         # parse all the flags

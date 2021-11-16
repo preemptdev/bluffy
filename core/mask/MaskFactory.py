@@ -72,10 +72,12 @@ class CLSID(MaskFactory):
     def get_mask_type(self) -> MaskHandler:
         return UUIDMasker()
 
+def get_factories() -> dict[str, MaskFactory]:
+    return {"svg": SVG(), "uuid": UUID(), "clsid": CLSID()}
+
 
 def get_mask_factory(mask_required: str) -> MaskFactory:
     """Determine the Mask Class"""
-
-    factories = {"svg": SVG(), "uuid": UUID(), "clsid": CLSID()}
+    factories:[str, MaskFactory] = get_factories()
     if mask_required.lower() in factories:
         return factories[mask_required]
