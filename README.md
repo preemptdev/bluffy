@@ -53,8 +53,9 @@ usage: Bluffy [-h] -b  -o  -m
 optional arguments:
   -h, --help      show this help message and exit
   -b , --bin      Specify bin file to load
-  -o , --output   Specify file to output to
   -m , --mask     Specify the mask for the shellcode
+  -p , --preview  Preview the created format
+  --list          List all the available masks
 ```
 
 Written by:

@@ -33,18 +33,18 @@ class Args:
             metavar="",
         )
 
-        # Simple, list the available masks
-        parser.add_argument(
-            "--list",
-            help="List all the available masks",
-            action="store_true"
-        )
-        
         # Preview the created file after ... creation
         parser.add_argument(
             "-p",
             "--preview",
             help="Preview after creation",
+            action="store_true"
+        )
+
+        # Simple, list the available masks
+        parser.add_argument(
+            "--list",
+            help="List all the available masks",
             action="store_true"
         )
 
