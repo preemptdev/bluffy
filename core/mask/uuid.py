@@ -3,6 +3,8 @@ from core import helpers
 
 
 class UUIDMgr:
+    """This will handle both UUID and CLSIDs"""
+
     def __init__(self, blob: bytes):
         self.blob = blob
         self.blob_size = len(blob)
