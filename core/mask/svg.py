@@ -25,7 +25,18 @@ class SVGMgr:
         # start at 0, it will increment at 16 and will indicate where to start reading the chunk from
         start = 0
 
-        svg_groups: str = ""
+        code: list[str] = []
+
+        # xml declaration string
+        code.append('<?xml version="1.0" standalone="no"?>')
+
+        # open the svg tag
+        code.append(
+            '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="5cm" height="5cm">'
+        )
+
+        # add a random description
+        code.append(f"<desc>{helpers.random_string(size=36)}</desc>")
 
         # loop over 16 bytes at a time
         for idx in range(start, self.blob_size, self.chunk_size):
@@ -50,29 +61,21 @@ class SVGMgr:
                 padding = self.chunk_size - len(chunk)
                 chunk = chunk + (self.nop * padding)
 
-            svg_groups += self.get_svg_group(chunk)
-
-        svg_payload: str = ""
-
-        # xml declaration string
-        svg_payload += '<?xml version="1.0" standalone="no"?>\n'
-
-        # open the svg tag
-        svg_payload += '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="5cm" height="5cm">\n'
-
-        # add a random description
-        svg_payload += f"<desc>{helpers.random_string(size=36)}</desc>\n"
-
-        # add the groups
-        svg_payload += svg_groups
+            # for every group formatted, add it into the code
+            for group in self.get_svg_group(chunk):
+                code.append(group)
 
         # close the tag
-        svg_payload += "</svg>\n"
+        code.append("</svg>")
 
-        return svg_payload
+        payload: str = helpers.get_c_var(self.payload_name, code)
+
+        return payload
 
     def get_svg_group(self, chunk) -> str:
         """Create the svg <g id=x> struct"""
+
+        code: list[str] = []
 
         # get a random string for the group name
         group_name: str = helpers.random_string(size=12)
@@ -80,11 +83,8 @@ class SVGMgr:
         # pick a random colour
         colour: str = self.random_colour()
 
-        # empty string to append to
-        svg_group: str = ""
-
         # add the group declaration
-        svg_group += f'<g id="{group_name}" fill="{colour}">\n'
+        code.append(f'<g id="{group_name}" fill="{colour}">')
 
         # split the chunk up into a list of ints
         data: list[int] = [idx for idx in chunk]
@@ -97,12 +97,14 @@ class SVGMgr:
             # for every attribute
             for attr in range(0, attrs):
                 # for each chunk of a chunk
-                svg_group += f'    <rect x="{chunk_set[attr]}cm" y="{chunk_set[attr]}cm" width="{chunk_set[attr]}cm" height="{chunk_set[attr]}cm"/>\n'
+                code.append(
+                    f'<rect x="{chunk_set[attr]}cm" y="{chunk_set[attr]}cm" width="{chunk_set[attr]}cm" height="{chunk_set[attr]}cm"/>'
+                )
 
         # close the group
-        svg_group += "</g>\n"
+        code.append("</g>")
 
-        return svg_group
+        return code
 
     def random_colour(self):
         """Choose a random colour"""

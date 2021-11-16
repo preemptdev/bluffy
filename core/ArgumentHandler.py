@@ -21,15 +21,6 @@ class Args:
             "-b", "--bin", help="Specify bin file to load", metavar="", required=True
         ),
 
-        # File to output to
-        parser.add_argument(
-            "-o",
-            "--output",
-            help="Specify file to output to",
-            metavar="",
-            required=True,
-        ),
-
         # Always required, but the choices[] param is needed too
         parser.add_argument(
             "-m",

@@ -3,6 +3,7 @@ from pathlib import Path
 import random, string
 from core import logger
 
+
 def get_bytes_from_file(fpath: str) -> bytes:
     """Read a file and return its bytes"""
     try:
@@ -25,11 +26,45 @@ def chunker(to_chunk: list, size: int) -> list:
     for i in range(0, len(to_chunk), size):
         yield to_chunk[i : i + size]
 
-def write_text_to_file(fpath: str, data: str) -> bool:
+
+def write_text_to_cfile(name: str, data: str) -> None:
+    """Take in the name of the mask and turn it into a .c filename"""
     try:
-        fp: Path = Path(fpath)
+        fp: Path = Path(name + ".c")
         fp.write_text(data)
-        return True
+        logger.good(f"Written to {fp}")
     except Exception as e:
-        logger.bad(f"Failed to write {fpath}: {str(e)}")
-        return False
+        logger.bad(f"Failed to write {name}: {str(e)}")
+    # doesnt really matter if it works or not, this is the last step and the try/except will tell the user what went wrong anyway
+    return
+
+
+def get_c_var(declaration: str, code: list[str]) -> str:
+    """Given a C Variable declaration and a list of (lines of) code, format it into something C will be happy with"""
+
+    # this will contain the final payload
+    payload: str = ""
+
+    # add the declaration and open the braces
+    payload += f"{declaration} = {{\n"
+
+    # for each line of code...
+    for idx, line in enumerate(code):
+
+        # if its the last line, dont add a comma
+        if idx == len(code) - 1:
+            end = "\n"
+        else:
+            end = ",\n"
+
+        # escape any "
+        if '"' in line:
+            line = line.replace('"', '\\"')
+
+        # add it
+        payload += f'    "{line}"{end}'
+
+    # close stuff
+    payload += "};"
+
+    return payload
