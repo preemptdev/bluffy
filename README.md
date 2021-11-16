@@ -60,3 +60,8 @@ optional arguments:
 Written by:
 - [Michael Ranaldo](https://twitter.com/michaeljranaldo)
 - [Mez0](https://twitter.com/__mez0__)
+
+## Requirements
+
+- python3.9 or greater
+- rich
