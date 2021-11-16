@@ -17,7 +17,12 @@ class Args:
         )
 
         # Bin to read
-        parser.add_argument("-b", "--bin", help="Specify bin file to load", metavar=""),
+        parser.add_argument(
+            "-b",
+            "--bin",
+            help="Specify bin file to load",
+            metavar=""
+        ),
 
         # Always required, but the choices[] param is needed too
         parser.add_argument(
@@ -30,7 +35,17 @@ class Args:
 
         # Simple, list the available masks
         parser.add_argument(
-            "--list", help="List all the available masks", action="store_true"
+            "--list",
+            help="List all the available masks",
+            action="store_true"
+        )
+        
+        # Preview the created file after ... creation
+        parser.add_argument(
+            "-p",
+            "--preview",
+            help="Preview after creation",
+            action="store_true"
         )
 
         # parse all the flags

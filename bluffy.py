@@ -1,10 +1,10 @@
 from core.ArgumentHandler import Args
 from core import helpers
 from core.mask.MaskFactory import get_mask_factory, get_factories, MaskFactory
-from core import logger, banner
+from core import logger, banner, preview
 
 
-def mask_bin(input_file: str, mask_required: str) -> None:
+def mask_bin(input_file: str, mask_required: str, preview_file: bool) -> None:
     """Given an input, output, and mask type: read the bytes, identify the factory, mask the bytes, write them to disk."""
 
     if input_file == None or mask_required == None:
@@ -33,6 +33,10 @@ def mask_bin(input_file: str, mask_required: str) -> None:
 
     # give the blob to the class and perform whatever transformations... This should then return a multiline string containing the transformed data
     bluff = mask.mask(blob)
+
+    if (preview_file):
+        logger.info(f"Loading preview:")
+        preview.print_preview(bluff, "c")
 
     # try write it to disk, if it doesnt, helpers will print the exception so it doesnt matter.
     # Note: this function appends .c to the file name
@@ -63,7 +67,7 @@ def main() -> None:
 
     # otherwise do the thing!
     else:
-        mask_bin(input_file=args.bin, mask_required=args.mask)
+        mask_bin(input_file=args.bin, mask_required=args.mask, preview_file=args.preview)
 
     return
 
