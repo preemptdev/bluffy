@@ -42,7 +42,7 @@ class MaskFactory(ABC):
 
 
 class SVG(MaskFactory):
-    """Return the correct SVG Cryptor object"""
+    """Return the correct SVG Masker object"""
 
     def __init__(self):
         self.name = "SVG"
@@ -52,7 +52,7 @@ class SVG(MaskFactory):
 
 
 class UUID(MaskFactory):
-    """Return the correct UUID Cryptor object"""
+    """Return the correct UUID Masker object"""
 
     def __init__(self):
         self.name = "UUID"
@@ -62,7 +62,7 @@ class UUID(MaskFactory):
 
 
 class CLSID(MaskFactory):
-    """Return the correct CLSID Cryptor object"""
+    """Return the correct CLSID Masker object"""
 
     def __init__(self):
         self.name = "CLSID"
