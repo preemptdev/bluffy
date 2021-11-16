@@ -9,7 +9,7 @@ def mask_bin(input_file: str, mask_required: str) -> None:
 
     if input_file == None or mask_required == None:
         logger.bad("Please specify -b AND -m (bin file and mask)")
-        quit()
+        return 
 
     # get the bytes of the input bin
     blob: bytes = helpers.get_bytes_from_file(input_file)
