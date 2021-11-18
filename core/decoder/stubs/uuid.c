@@ -4,7 +4,7 @@
 
 ###PAYLOAD###
 
-const payloadSz = ###SIZE###;
+const int payloadSz = ###SIZE###;
 
 LPVOID WriteUuidToMem()
 {
