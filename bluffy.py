@@ -1,6 +1,7 @@
 from core.ArgumentHandler import Args
 from core import helpers
 from core.mask.MaskFactory import get_mask_factory, get_factories, MaskFactory
+from core.decoder.DecodeHandler import DecodeHandler
 from core import logger, banner, preview
 
 
@@ -40,7 +41,7 @@ def mask_bin(args) -> bool:
 
     # try write it to disk, if it doesnt, helpers will print the exception so it doesnt matter.
     # Note: this function appends .c to the file name
-    helpers.write_text_to_cfile(factory.name, bluff)
+    helpers.write_text_to_cfile(f"{factory.name}_stub", bluff)
 
     # hopefully its done!
     return True
@@ -66,7 +67,9 @@ def main() -> None:
         quit()
 
     # otherwise do the thing!
-    mask_bin(args)
+    if mask_bin(args):
+        decoder: DecodeHandler = DecodeHandler(args.mask)
+        decoder.get_stub()
 
     return
 
