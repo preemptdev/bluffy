@@ -68,10 +68,6 @@ def build_header_file(args) -> str:
     # return the code
     return decode_stub
 
-    # if args.preview:
-    #     logger.info(f"Loading preview:")
-    #     preview.print_preview(bluff, "c")
-
 
 def show_masks() -> None:
     """Call the get_factories() function to get the available options and pretty print them in logger.py"""
@@ -99,7 +95,11 @@ def main() -> None:
 
     helpers.write_text_to_file(f"{args.mask}.h", code)
 
-    # return
+    if args.preview:
+        logger.info(f"Loading preview:")
+        preview.print_preview(code, "c")
+
+    return
 
 
 if __name__ == "__main__":
