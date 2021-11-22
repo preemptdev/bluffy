@@ -27,10 +27,10 @@ def chunker(to_chunk: list, size: int) -> list:
         yield to_chunk[i : i + size]
 
 
-def write_text_to_cfile(name: str, data: str) -> None:
+def write_text_to_file(name: str, data: str) -> None:
     """Take in the name of the mask and turn it into a .c filename"""
     try:
-        fp: Path = Path(name + ".c")
+        fp: Path = Path(name)
         fp.write_text(data)
         logger.good(f"Written to {fp}")
     except Exception as e:
@@ -68,3 +68,8 @@ def get_c_var(declaration: str, code: list[str]) -> str:
     payload += "};"
 
     return payload
+
+
+def get_size_filecontent_size(path: str) -> str:
+    """Wrap the read file from disk function to return the len of the bytes"""
+    return str(len(get_bytes_from_file(path)))

@@ -32,7 +32,7 @@ class SVGMgr:
 
         # open the svg tag
         code.append(
-            '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="5cm" height="5cm">'
+            '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1250cm" height="1250cm">'
         )
 
         # add a random description
