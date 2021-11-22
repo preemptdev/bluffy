@@ -64,5 +64,33 @@ Written by:
 
 ## Requirements
 
-- python3.9 or greater
-- rich
+python3.9 or greater:
+```bash
+sudo apt install python3.9
+```
+
+rich:
+```bash
+sudo pip3 install rich
+````
+
+pcre2.8:
+
+Depending on whether its going to be ran on Kali, Ubuntu 18, 19, 20, and so on, it may be different.
+
+For us, it was developed on:
+```
+$ lsb_release -a
+No LSB modules are available.
+Distributor ID: Ubuntu
+Description:  Ubuntu 21.04
+Release:  21.04
+Codename: hirsute
+```
+
+In order to link `libpcre2-8.a`, the `.a` file had to be in:
+```
+/usr/lib/gcc/x86_64-w64-mingw32/10-win32
+```
+
+As for obtaining the header and lib files, [MSYS2](https://packages.msys2.org/base/mingw-w64-pcre2) was used. But if you're smarter than us, then just do it from source for Mingw64: https://pcre.org/
