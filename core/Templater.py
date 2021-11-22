@@ -10,3 +10,6 @@ class Templater:
 
     # Size of the payload
     size: str = "###SIZE###"
+
+    # Logic to handle de-XOR-ing (aka XOR)
+    xor_logic: str = "###XOR_LOGIC###"
