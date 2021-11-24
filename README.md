@@ -127,3 +127,7 @@ make
 This will use the included "main.c" to build an Windows executable. Test this to confirm. If you have also used calc.bin, you should be greeted by a new Calc window opening. If so, congratulations!
 
 For more details on using Bluffy and a walkthrough of how it works and what the output looks like, check out our [blog](https://ad-995.group/posts/bluffy/bluffy.html)
+
+Here is a full example:
+
+![example](/images/bluffy.gif)
