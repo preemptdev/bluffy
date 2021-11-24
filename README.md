@@ -51,11 +51,12 @@ Written by:
 usage: Bluffy [-h] -b  -o  -m
 
 optional arguments:
-  -h, --help      show this help message and exit
-  -b , --bin      Specify bin file to load
-  -m , --mask     Specify the mask for the shellcode
-  -p , --preview  Preview the created format
-  --list          List all the available masks
+  -h, --help              show this help message and exit
+  -b , --bin              Specify bin file to load
+  -m , --mask             Specify the mask for the shellcode
+  -p , --preview          Preview the created format
+  -pp, --payload_preview  Preview the payload prior to C formatting
+  --list                  List all the available masks
 ```
 
 Written by:
