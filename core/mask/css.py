@@ -63,7 +63,7 @@ class CSSMgr:
         return payload
 
     def get_css_group(self, chunk) -> str:
-        """Create the svg <g id=x> struct"""
+        """Create the css <g id=x> struct"""
 
         code: list[str] = []
 
@@ -76,7 +76,7 @@ class CSSMgr:
         # split the chunk up into a list of ints
         data: list[int] = [idx for idx in chunk]
 
-        # amount of svg attrs that are going to be used
+        # amount of css attrs that are going to be used
         attrs: int = 4
 
         # split all the chunks to fit into the attrs require
