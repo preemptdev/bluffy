@@ -13,10 +13,19 @@ class DecodeHandler:
         if self.mask not in get_factories().keys():
             return False
 
-        stub_path = [i for i in self.c_stubs if self.mask in str(i)][0]
-        if stub_path == None:
-            logger.bad(f"Failed to find a C stub for {self.mask}!")
-            return None
+        stub_path = None
+
+        try:
+            stub_path = [i for i in self.c_stubs if self.mask in str(i)][0]
+        except IndexError:
+            stubbo = self.path.glob("core/decoder/stubs/*.c")
+            logger.bad(f"Failed to find a C stub for '{self.mask}' within 'core/decoder/stubs'!")
+            logger.bad(f"  Identified {len(self.c_stubs)} stubs within 'core/decoder/stubs':")
+            stub_path = [i for i in self.c_stubs if self.mask in str(i)]
+            for stub in self.c_stubs:
+                logger.bad(f"    '{stub}'")
+            logger.bad("Exiting program")
+            return None;
 
         code = stub_path.read_text()
 
