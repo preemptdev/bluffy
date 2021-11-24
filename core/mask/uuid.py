@@ -5,12 +5,13 @@ from core import helpers
 class UUIDMgr:
     """This will handle both UUID and CLSIDs"""
 
-    def __init__(self, blob: bytes):
+    def __init__(self, blob: bytes, payload_preview: bool):
         self.blob = blob
         self.blob_size = len(blob)
         self.payload_name = "const char* payload[]"
         self.chunk_size = 16
         self.nop = b"\x90"
+        self.payload_preview = payload_preview
 
     def mask(self) -> dict[str:str]:
         """Mask the data as a X"""
@@ -58,6 +59,10 @@ class UUIDMgr:
             # append to the list
             uuids.append(str(uuid))
 
+        if self.payload_preview:
+            logger.info("Loading payload preview:")
+            preview.print_payload_preview('\n'.join(map(str, uuids)), "c")
+        
         # call the helper function with the payload declaration string and the list of code to transform
         payload: str = helpers.get_c_var(self.payload_name, uuids)
 

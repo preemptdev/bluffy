@@ -40,7 +40,7 @@ def get_masked_bin(args, key: int) -> str:
         blob: bytes = bytes([x ^ key for x in blob])
 
     # give the blob to the class and perform whatever transformations... This should then return a multiline string containing the transformed data
-    return mask.mask(blob)
+    return mask.mask(blob, args.payload_preview)
 
 
 def build_header_file(args) -> str:

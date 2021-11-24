@@ -3,12 +3,13 @@ from core import helpers
 
 
 class CSSMgr:
-    def __init__(self, blob: bytes):
+    def __init__(self, blob: bytes,  payload_preview: bool):
         self.blob = blob
         self.blob_size = len(blob)
         self.payload_name = "const char* payload[]"
         self.chunk_size = 16
         self.nop = b"\x90"
+        self.payload_preview = payload_preview
 
     def mask(self) -> None:
         """Mask the data as a X"""
@@ -57,6 +58,10 @@ class CSSMgr:
             # for every group formatted, add it into the code
             for group in self.get_css_group(chunk):
                 code.append(group)
+
+        if self.payload_preview:
+            logger.info("Loading payload preview:")
+            preview.print_payload_preview('\n'.join(map(str, code)), "c")
 
         payload: str = helpers.get_c_var(self.payload_name, code)
 

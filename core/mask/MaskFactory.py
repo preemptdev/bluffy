@@ -11,29 +11,29 @@ class MaskHandler(ABC):
         self.name = ""
 
     @abstractmethod
-    def mask(self, blob: bytes):
+    def mask(self, blob: bytes, payload_preview: bool):
         """mask some data"""
 
 
 class SVGMasker(MaskHandler):
     """mask with SVG"""
 
-    def mask(self, blob: bytes):
-        SVG = SVGMgr(blob)
+    def mask(self, blob: bytes, payload_preview: bool):
+        SVG = SVGMgr(blob, payload_preview)
         return SVG.mask()
 
 class CSSMasker(MaskHandler):
     """mask with CSS"""
 
-    def mask(self, blob: bytes):
-        CSS = CSSMgr(blob)
+    def mask(self, blob: bytes, payload_preview: bool):
+        CSS = CSSMgr(blob, payload_preview)
         return CSS.mask()
 
 class UUIDMasker(MaskHandler):
     """mask with UUID"""
 
-    def mask(self, blob: bytes):
-        UUID = UUIDMgr(blob)
+    def mask(self, blob: bytes, payload_preview: bool):
+        UUID = UUIDMgr(blob, payload_preview)
         return UUID.mask()
 
 

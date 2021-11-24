@@ -29,7 +29,7 @@ class Args:
             "-m",
             "--mask",
             help="Specify the mask for the shellcode",
-            choices=["svg", "css", "uuid", "clsid"],
+            choices=["svg", "css", "uuid", "clsid", "csv"],
             metavar="",
         )
 
@@ -48,6 +48,15 @@ class Args:
             help="Preview after creation",
             action="store_true"
         )
+
+        # Preview the created file after ... creation
+        parser.add_argument(
+            "-pp",
+            "--payload-preview",
+            help="Preview just payload after creation",
+            action="store_true"
+        )
+
 
         # Simple, list the available masks
         parser.add_argument(
