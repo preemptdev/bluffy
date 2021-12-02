@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from core.mask.svg import SVGMgr
 from core.mask.css import CSSMgr
 from core.mask.uuid import UUIDMgr
+from core.mask.csv import CSVMgr
 
 
 class MaskHandler(ABC):
@@ -28,6 +29,13 @@ class CSSMasker(MaskHandler):
     def mask(self, blob: bytes, payload_preview: bool):
         CSS = CSSMgr(blob, payload_preview)
         return CSS.mask()
+
+class CSVMasker(MaskHandler):
+    """mask with CSV"""
+
+    def mask(self, blob: bytes, payload_preview: bool):
+        CSV = CSVMgr(blob, payload_preview)
+        return CSV.mask()
 
 class UUIDMasker(MaskHandler):
     """mask with UUID"""
@@ -66,6 +74,14 @@ class CSS(MaskFactory):
     def get_mask_type(self) -> MaskHandler:
         return CSSMasker()
 
+class CSV(MaskFactory):
+    """Return the correct CSV Masker object"""
+
+    def __init__(self):
+        self.name = "CSV"
+
+    def get_mask_type(self) -> MaskHandler:
+        return CSVMasker()
 
 class UUID(MaskFactory):
     """Return the correct UUID Masker object"""
@@ -89,7 +105,7 @@ class CLSID(MaskFactory):
         return UUIDMasker()
 
 def get_factories() -> dict[str, MaskFactory]:
-    return {"svg": SVG(), "css": CSS(), "uuid": UUID(), "clsid": CLSID()}
+    return {"svg": SVG(), "css": CSS(), "csv": CSV(), "uuid": UUID(), "clsid": CLSID()}
 
 
 def get_mask_factory(mask_required: str) -> MaskFactory:

