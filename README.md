@@ -21,6 +21,7 @@ So far, we implemented:
 2. CLSID
 3. SVG
 4. CSS
+5. CSV
 
 ## Help
 
