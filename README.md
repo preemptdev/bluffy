@@ -131,4 +131,5 @@ For more details on using Bluffy and a walkthrough of how it works and what the 
 
 Here is a full example:
 
-![example](/images/bluffy.gif)
+<p align="center"><img src="https://github.com/ad-995/bluffy/raw/main/images/bluffy.gif" width="550"></p>
+
