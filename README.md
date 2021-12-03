@@ -3,7 +3,6 @@
 <p align="center">
   <img alt="bluffy" src="https://media.giphy.com/media/11Mj6P6WqWnnuU/giphy.gif" height="140" />
   <p align="center">
-    <a href="https://github.com/ad-995/bluffy/releases/latest"><img alt="Release" src="https://img.shields.io/github/release/ad-995/bluffy.svg?style=flat-square"></a>
     <a href="https://github.com/ad-995/bluffy/blob/master/LICENSE"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
     <a href="https://github.com/ad-995/bluffy/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/ad-995/bluffy.svg?style=flat-square"></a>
     </p>
